@@ -1,0 +1,8 @@
+-classpath 'C:\\Users\\Rcom\\Desktop\\Tp6\\build\\classes\\java\\main;C:\\Users\\Rcom\\Desktop\\Tp6\\build\\resources\\main'
+-d 'C:\\Users\\Rcom\\Desktop\\Tp6\\build\\docs\\javadoc'
+-doctitle 'id 1.0 API'
+-quiet 
+-windowtitle 'id 1.0 API'
+'C:\\Users\\Rcom\\Desktop\\Tp6\\src\\main\\java\\com\\example\\exception\\NoSquareException.java'
+'C:\\Users\\Rcom\\Desktop\\Tp6\\src\\main\\java\\com\\example\\model\\Matrix.java'
+'C:\\Users\\Rcom\\Desktop\\Tp6\\src\\main\\java\\com\\example\\service\\MatrixMathematics.java'

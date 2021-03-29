@@ -1,0 +1,82 @@
+plugins {
+    id 'java'
+    id "com.github.spacialcircumstances.gradle-cucumber-reporting" version "0.1.22"
+    id 'jacoco'
+    id "org.sonarqube" version "3.1.1"
+    id 'maven-publish'
+    id "net.madeng.slack" version "0.0.23"
+}
+
+group 'com.example'
+version '1.0'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'io.cucumber:cucumber-java:6.0.0'
+    testImplementation 'io.cucumber:cucumber-junit:6.0.0'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+cucumberReports {
+    outputDir = file('build/reports/cucumber')
+    buildId = '0'
+    reports = files('reports/example-report.json')
+}
+test.finalizedBy "sonarqube"
+
+task createFolder{
+    doLast{
+        mkdir "MatrixRelease/Matrix_v_1.0"
+    }
+}
+task generateMatrixAPI1(type:Copy){
+    from 'build/reports'
+    into 'MatrixRelease/Matrix_v_1.0/reports'
+}
+task generateMatrixAPI2(type:Copy){
+    from 'build/docs'
+    into 'MatrixRelease/Matrix_v_1.0/docs'
+}
+task generateMatrixAPI3(type:Copy){
+    from 'build/libs'
+    into 'MatrixRelease/Matrix_v_1.0/libs'
+}
+generateMatrixAPI1.dependsOn "build" , "javadoc"
+generateMatrixAPI2.dependsOn "build" , "javadoc"
+generateMatrixAPI3.dependsOn "build" , "javadoc"
+
+
+publishing {
+    repositories {
+        maven {
+            url 'https://mymavenrepo.com/repo/jCSNpr4BOezvyijT5jW7/'
+            credentials {
+                username 'myMavenRepo'
+                password '12345'
+            }
+        }
+    }
+
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+generateMatrixAPI1.finalizedBy "publish"
+generateMatrixAPI2.finalizedBy "publish"
+generateMatrixAPI3.finalizedBy "publish"
+
+slack {
+    webhookUrl 'https://hooks.slack.com/services/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'
+    message {
+        text = "Project is built newly and deployed"
+        channel = '#tpgradle'
+    }
+}
+publish.finalizedBy "publishToSlack"
