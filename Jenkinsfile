@@ -8,11 +8,16 @@ pipeline {
         archiveArtifacts 'build/libs/*.jar, build/docs/javadoc/*'
         archiveArtifacts 'build/test-results/test/*'
       }
+      post {   
+         failure {  
+             mail bcc: '', body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "ERROR BUILD: Projet -> ${env.JOB_NAME}", to: "hl_beddek@esi.dz";  
+         }  
+     }
     }
 
     stage('Mail notification') {
       steps {
-        mail(subject: 'New push [github]', body: 'Un push a ÈtÈ fait dans le repository github', cc: 'hl_beddek@esi.dz')
+        mail(subject: "New push [github]: Projet -> ${env.JOB_NAME}", body: 'Un push a √©t√© fait avec success <br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}', to: 'hl_beddek@esi.dz')
       }
     }
 
