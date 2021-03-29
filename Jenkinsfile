@@ -4,7 +4,7 @@ pipeline {
     stage('Build') {
       post {
         failure {
-          mail(subject: "ERROR BUILD: Projet -> ${env.JOB_NAME}",body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", to: 'hl_beddek@esi.dz')
+          mail(subject: "ERROR BUILD: Projet -> ${env.JOB_NAME}", body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", to: 'hl_beddek@esi.dz')
         }
 
       }
