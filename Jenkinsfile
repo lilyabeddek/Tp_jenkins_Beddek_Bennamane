@@ -4,7 +4,7 @@ pipeline {
     stage('Build') {
       post {
         failure {
-          mail(subject: "ERROR BUILD: Projet -> ${env.JOB_NAME}", body: "Project: ${env.JOB_NAME} Build Number: ${env.BUILD_NUMBER} URL de build: ${env.BUILD_URL}", to: 'hl_beddek@esi.dz')
+          mail(subject: "ERROR BUILD: Projet -> ${env.JOB_NAME}", body: "Project: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL de build: ${env.BUILD_URL}", to: 'hl_beddek@esi.dz')
         }
 
       }
@@ -18,7 +18,7 @@ pipeline {
 
     stage('Mail notification') {
       steps {
-        mail(subject: "New push [github]: Projet -> ${env.JOB_NAME}", body: "Un push a été fait avec success  Project: ${env.JOB_NAME} Build Number: ${env.BUILD_NUMBER} \n URL de build: ${env.BUILD_URL}", to: 'hl_beddek@esi.dz')
+        mail(subject: "New push [github]: Projet -> ${env.JOB_NAME}", body: "Un push a été fait avec success\nProject: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\n URL de build: ${env.BUILD_URL}", to: 'hl_beddek@esi.dz')
       }
     }
 
