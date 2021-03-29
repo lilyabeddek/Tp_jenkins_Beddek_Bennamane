@@ -9,7 +9,7 @@ pipeline {
 
       }
       steps {
-        bat 'D:\\grdle-5.6\\bin\\gradle build'
+        bat 'D:\\gradle-5.6\\bin\\gradle build'
         bat 'D:\\gradle-5.6\\bin\\gradle javadoc'
         archiveArtifacts 'build/libs/*.jar, build/docs/javadoc/*'
         archiveArtifacts 'build/test-results/test/*'
