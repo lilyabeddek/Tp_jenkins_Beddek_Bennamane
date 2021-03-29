@@ -2,17 +2,18 @@ pipeline {
   agent any
   stages {
     stage('Build') {
+      post {
+        failure {
+          mail(bcc: '', body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "ERROR BUILD: Projet -> ${env.JOB_NAME}", to: 'hl_beddek@esi.dz')
+        }
+
+      }
       steps {
         bat 'D:\\gradle-5.6\\bin\\gradle build'
         bat 'D:\\gradle-5.6\\bin\\gradle javadoc'
         archiveArtifacts 'build/libs/*.jar, build/docs/javadoc/*'
         archiveArtifacts 'build/test-results/test/*'
       }
-      post {   
-         failure {  
-             mail bcc: '', body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "ERROR BUILD: Projet -> ${env.JOB_NAME}", to: "hl_beddek@esi.dz";  
-         }  
-     }
     }
 
     stage('Mail notification') {
